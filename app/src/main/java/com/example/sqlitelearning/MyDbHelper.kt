@@ -54,4 +54,69 @@ class MyDbHelper(context: Context?) : SQLiteOpenHelper(
         //return id of inserted record
         return id
     }
+
+
+    //get all data
+    fun getAllRecords(orderBy : String):ArrayList<ModelRecord>{
+
+        val recordList = ArrayList<ModelRecord>()
+
+        val selectQuery = "SELECT * FROM ${Constants.TABLE_NAME} ORDER BY $orderBy"
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(selectQuery,null)
+
+        if(cursor.moveToFirst()){
+            do{
+                val modelRecord = ModelRecord(
+                    ""+cursor.getInt(cursor.getColumnIndex(Constants.C_ID)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_NAME)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_IMAGE)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_BIO)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_PHONE)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_EMAIL)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_DOB)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_ADDED_TIMESTAMP)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_UPDATED_TIMESTAMP))
+                )
+                //add record to list
+                recordList.add(modelRecord)
+            }while (cursor.moveToNext())
+        }
+        //close db connection
+        db.close()
+
+        //return quoried result
+        return recordList
+    }
+
+    fun searchRecords(query:String):ArrayList<ModelRecord>{
+        val recordList = ArrayList<ModelRecord>()
+
+        val selectQuery = "SELECT * FROM ${Constants.TABLE_NAME} WHERE ${Constants.C_NAME} LIKE '%$query%'"
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(selectQuery,null)
+
+        if(cursor.moveToFirst()){
+            do{
+                val modelRecord = ModelRecord(
+                    ""+cursor.getInt(cursor.getColumnIndex(Constants.C_ID)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_NAME)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_IMAGE)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_BIO)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_PHONE)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_EMAIL)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_DOB)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_ADDED_TIMESTAMP)),
+                    ""+cursor.getString(cursor.getColumnIndex(Constants.C_UPDATED_TIMESTAMP))
+                )
+                //add record to list
+                recordList.add(modelRecord)
+            }while (cursor.moveToNext())
+        }
+        //close db connection
+        db.close()
+
+        //return quoried result
+        return recordList
+    }
 }
