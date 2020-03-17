@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class MyDbHelper(context: Context?) : SQLiteOpenHelper(
     context,
@@ -35,6 +36,7 @@ class MyDbHelper(context: Context?) : SQLiteOpenHelper(
     ):Long{
         //get writable database we want to write a data
         val db = this.writableDatabase
+        Log.d("Insert Data : ","$name $bio $addedTIme $updatedTime")
         val values = ContentValues()
         //id will be increamented automatically because of the AUTOINCREMENT
         //insert data
@@ -61,7 +63,7 @@ class MyDbHelper(context: Context?) : SQLiteOpenHelper(
 
         val recordList = ArrayList<ModelRecord>()
 
-        val selectQuery = "SELECT * FROM ${Constants.TABLE_NAME} ORDER BY $orderBy"
+        val selectQuery = "SELECT * FROM ${Constants.TABLE_NAME}"// ORDER BY $orderBy"
         val db = this.writableDatabase
         val cursor = db.rawQuery(selectQuery,null)
 
