@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView;
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var dbHelper:MyDbHelper
 
     //orderby /or quries
-    private val NEWEST_FIRST = "${Constants.C_ADDED_TIMESTAMP} DESC"
+    private val NEWEST_FIRST = Constants.C_ADDED_TIMESTAMP + " DESC"// "${Constants.C_ADDED_TIMESTAMP} DESC"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
