@@ -1,6 +1,8 @@
 package com.example.sqlitelearning
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
@@ -75,8 +77,62 @@ class AdapterRecord() : RecyclerView.Adapter<AdapterRecord.HolderRecord>() {
 
         //handle more btn click show edit /show option show
         holder.moreBtn.setOnClickListener{
-            //will implement later
+            //Show more options
+            showMoreOptions(
+                position,
+                id,
+                name,
+                phone,
+                email,
+                dob,
+                bio,
+                image,
+                addedTime,
+                updatedTime
+            )
         }
+    }
+
+    private fun showMoreOptions(
+        position: Int,
+        id: String,
+        name: String,
+        phone: String,
+        email: String,
+        dob: String,
+        bio: String,
+        image: String,
+        addedTime: String,
+        updatedTime: String
+    ) {
+    //option to display in disloge
+        val options = arrayOf("Edit","Delete")
+        //dialog
+        val dialog:AlertDialog.Builder = AlertDialog.Builder(context)
+        //set items and click listener
+        dialog.setItems(options) { dialog, which ->
+            //handle item click
+            if (which == 0){
+                //edit clicked
+                val intent = Intent(context,addUpdateRecordActivity::class.java)
+                intent.putExtra("ID",id)
+                intent.putExtra("NAME",name)
+                intent.putExtra("PHONE",phone)
+                intent.putExtra("EMAIL",email)
+                intent.putExtra("DOB",dob)
+                intent.putExtra("BIO",bio)
+                intent.putExtra("IMAGE",image)
+                intent.putExtra("ADDED_TIME",addedTime)
+                intent.putExtra("UPDATED_TIME",updatedTime)
+                intent.putExtra("isEditMode",true)
+                context!!.startActivity(intent)
+            }
+            else
+            {
+                //delete clicked
+            }
+        }
+        dialog.show()
     }
 
     inner class HolderRecord(itemView: View): RecyclerView.ViewHolder(itemView) {

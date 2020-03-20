@@ -57,6 +57,38 @@ class MyDbHelper(context: Context?) : SQLiteOpenHelper(
         return id
     }
 
+    //Update record to db
+    fun updateRecord(
+        id:String,
+        name:String?,
+        image:String?,
+        bio:String?,
+        phone:String?,
+        email:String?,
+        dob:String?,
+        addedTIme:String?,
+        updatedTime:String?):Long
+    {
+        //get writable database
+        val db = this.writableDatabase
+        val values = ContentValues()
+
+        values.put(Constants.C_NAME,name)
+        values.put(Constants.C_IMAGE,image)
+        values.put(Constants.C_BIO,bio)
+        values.put(Constants.C_PHONE,phone)
+        values.put(Constants.C_EMAIL,email)
+        values.put(Constants.C_DOB,dob)
+        values.put(Constants.C_ADDED_TIMESTAMP,addedTIme)
+        values.put(Constants.C_UPDATED_TIMESTAMP,updatedTime)
+
+        //Update
+        return db.update(Constants.TABLE_NAME,
+        values,
+            "${Constants.C_ID}=?",
+        arrayOf(id)).toLong()
+    }
+
 
     //get all data
     fun getAllRecords(orderBy : String):ArrayList<ModelRecord>{
@@ -121,4 +153,9 @@ class MyDbHelper(context: Context?) : SQLiteOpenHelper(
         //return quoried result
         return recordList
     }
+
+    //get total number of records
+    //delete single record using id
+    //delete all record
+
 }
